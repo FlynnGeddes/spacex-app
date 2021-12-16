@@ -17,7 +17,6 @@ import "./App.css";
 import { Box } from "@mui/system";
 import Done from "@mui/icons-material/Done";
 import ErrorIcon from "@mui/icons-material/Error";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface Launch {
 	id: string;
