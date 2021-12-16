@@ -141,15 +141,7 @@ function LaunchCard(props: LaunchCardProps) {
 				subheader={launchDate}
 			/>
 			{props.img && (
-				<CardMedia
-					component="img"
-					height={cardWidth / 2}
-					image={
-						props.img ||
-						"https://www.doz.com/cms/wp-content/uploads/2015/03/spacex-logo.jpg"
-					}
-					alt="No Image Available"
-				/>
+				<CardMedia component="img" height={cardWidth / 2} image={props.img} />
 			)}
 			<Box m={1}>
 				<Grid container justifyContent="center">
