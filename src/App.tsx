@@ -14,9 +14,10 @@ import {
 } from "@mui/material";
 //import data from './launch.json';
 import "./App.css";
-import { Box } from "@mui/system";
+import { Box, display } from "@mui/system";
 import Done from "@mui/icons-material/Done";
 import ErrorIcon from "@mui/icons-material/Error";
+import Pagination from "@material-ui/lab/Pagination";
 
 interface Launch {
 	id: string;
@@ -36,8 +37,19 @@ interface Launch {
 }
 
 function App() {
+	const itemLimit = 8;
 	const [loading, setLoading] = useState(true);
 	const [launches, setLaunches] = useState<Launch[]>([]);
+	const [page, setPage] = React.useState(1);
+	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+		setPage(value);
+		console.log(value);
+	};
+
+	function paginate(array: Launch[], page_size: number, page_number: number) {
+		// human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+		return array.slice((page_number - 1) * page_size, page_number * page_size);
+	}
 
 	useEffect(() => {
 		const url = "https://api.spacexdata.com/v4/launches";
@@ -80,7 +92,7 @@ function App() {
 				sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
 			>
 				<Grid container justifyContent="center" spacing={4}>
-					{launches.map((launch) => {
+					{paginate(launches, itemLimit, page).map((launch) => {
 						return (
 							<Grid item xs={3}>
 								<LaunchCard
@@ -99,9 +111,23 @@ function App() {
 					})}
 				</Grid>
 			</Box>
+			<Box
+				sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+			>
+				<Pagination
+					count={Math.round(launches.length / itemLimit)}
+					variant="outlined"
+					color="primary"
+					page={page}
+					onChange={handleChange}
+					showFirstButton
+					showLastButton
+				/>
+			</Box>
 		</div>
 	);
 }
+
 interface LaunchCardProps {
 	id: string;
 	patch: string;
