@@ -18,7 +18,10 @@ import { Box } from "@mui/system";
 import Done from "@mui/icons-material/Done";
 import ErrorIcon from "@mui/icons-material/Error";
 import Pagination from "@material-ui/lab/Pagination";
-
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Collapse from "@mui/material/Collapse";
+import { styled } from "@mui/material/styles";
 interface Launch {
 	id: string;
 	name: string;
@@ -36,6 +39,21 @@ interface Launch {
 	upcoming: boolean;
 }
 
+interface ExpandMoreProps extends IconButtonProps {
+	expand: boolean;
+}
+
+const ExpandMore = styled((props: ExpandMoreProps) => {
+	const { expand, ...other } = props;
+	return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+	transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+	marginLeft: "auto",
+	transition: theme.transitions.create("transform", {
+		duration: theme.transitions.duration.shortest,
+	}),
+}));
+
 function App() {
 	let itemLimit = 24;
 	const [loading, setLoading] = useState(true);
@@ -50,7 +68,6 @@ function App() {
 	};
 
 	function paginate(array: Launch[], page_size: number, page_number: number) {
-		// human-readable page numbers usually start with 1, so we reduce 1 in the first argument
 		return array.slice((page_number - 1) * page_size, page_number * page_size);
 	}
 
@@ -146,6 +163,12 @@ interface LaunchCardProps {
 }
 
 function LaunchCard(props: LaunchCardProps) {
+	const [expanded, setExpanded] = React.useState(false);
+
+	const handleExpandClick = () => {
+		setExpanded(!expanded);
+	};
+
 	const cardWidth = 400;
 	const milliseconds = props.date * 1000;
 	const dateObject = new Date(milliseconds);
@@ -154,6 +177,22 @@ function LaunchCard(props: LaunchCardProps) {
 		day: "numeric",
 		year: "numeric",
 	});
+
+	const formatFirstDesc = (description: string) => {
+		if (description.length > 0) {
+			let initDescArr = description.split(" ").slice(0, 10);
+			let initDesc = initDescArr.join(" ") + "...";
+			return initDesc;
+		}
+	};
+
+	const formatLastDesc = (description: string) => {
+		if (description.length > 0) {
+			let initDescArr = description.split(" ").slice(10, description.length);
+			let initDesc = "..." + initDescArr.join(" ");
+			return initDesc;
+		}
+	};
 
 	return (
 		<Card sx={{ maxWidth: cardWidth }}>
@@ -188,21 +227,53 @@ function LaunchCard(props: LaunchCardProps) {
 				<Typography paragraph variant="caption" color="text.secondary">
 					Launch ID: {props.id}
 				</Typography>
-				<Typography paragraph variant="body2" color="text.primary" align="left">
-					{props.desc}
-				</Typography>
-				{props.link && (
-					<Grid>
-						<CardActions>
-							<Grid container justifyContent="flex-end">
-								<Button size="small" target="_blank" href={props.link}>
-									Learn More
-								</Button>
-							</Grid>
-						</CardActions>
-					</Grid>
+				{props.desc && (
+					<Typography
+						paragraph
+						variant="body2"
+						color="text.primary"
+						align="left"
+					>
+						{formatFirstDesc(props.desc)}
+					</Typography>
 				)}
 			</CardContent>
+			<Grid>
+				<CardActions>
+					{props.desc && (
+						<ExpandMore
+							expand={expanded}
+							onClick={handleExpandClick}
+							aria-expanded={expanded}
+							aria-label="show more"
+						>
+							<ExpandMoreIcon />
+						</ExpandMore>
+					)}
+
+					{props.link && (
+						<Grid container justifyContent="flex-end">
+							<Button size="small" target="_blank" href={props.link}>
+								Learn More
+							</Button>
+						</Grid>
+					)}
+				</CardActions>
+				{props.desc && (
+					<Collapse in={expanded} timeout="auto" unmountOnExit>
+						<CardContent>
+							<Typography
+								paragraph
+								variant="body2"
+								color="text.primary"
+								align="left"
+							>
+								{formatLastDesc(props.desc)}
+							</Typography>
+						</CardContent>
+					</Collapse>
+				)}
+			</Grid>
 		</Card>
 	);
 }
