@@ -11,10 +11,11 @@ import {
 	Button,
 	CircularProgress,
 	Chip,
+	ButtonGroup,
 } from "@mui/material";
 //import data from './launch.json';
 import "./App.css";
-import { Box } from "@mui/system";
+import { Box, typography } from "@mui/system";
 import Done from "@mui/icons-material/Done";
 import ErrorIcon from "@mui/icons-material/Error";
 import Pagination from "@material-ui/lab/Pagination";
@@ -37,13 +38,16 @@ interface Launch {
 }
 
 function App() {
-	const itemLimit = 8;
+	let itemLimit = 24;
 	const [loading, setLoading] = useState(true);
 	const [launches, setLaunches] = useState<Launch[]>([]);
 	const [page, setPage] = React.useState(1);
 	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
 		setPage(value);
-		console.log(value);
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
 	};
 
 	function paginate(array: Launch[], page_size: number, page_number: number) {
@@ -111,7 +115,9 @@ function App() {
 					})}
 				</Grid>
 			</Box>
+
 			<Box
+				m={1}
 				sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
 			>
 				<Pagination
