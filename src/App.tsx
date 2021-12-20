@@ -324,7 +324,7 @@ function LaunchCard(props: LaunchCardProps) {
     setExpanded(!expanded);
   };
 
-  const cardWidth = 400;
+  const cardWidth = window.screen.width / 4;
   const milliseconds = props.date * 1000;
   const dateObject = new Date(milliseconds);
   let launchDate = dateObject.toLocaleString("en-US", {
