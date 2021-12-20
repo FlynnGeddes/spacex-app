@@ -93,26 +93,37 @@ function App() {
     setAnchorEl(event.currentTarget);
   };
   const sortByName = () => {
-    launches.sort((a, b) => {
-      let fa = a.name.toLowerCase();
-      let fb = b.name.toLowerCase();
-
-      return fa.localeCompare(fb);
-    });
+    setLaunches(
+      launches.sort((a, b) => {
+        let fa = a.name.toLowerCase(),
+          fb = b.name.toLowerCase();
+        if (fa < fb) {
+          return -1;
+        }
+        if (fa > fb) {
+          return 1;
+        }
+        return 0;
+      })
+    );
     setPage(1);
     handleClose();
   };
 
   const sortByDate = () => {
-    launches.sort((a: any, b: any) => (a.date_unix > b.name ? -1 : 1));
+    setLaunches(
+      launches.sort((a: any, b: any) => (a.date_unix > b.date_unix ? -1 : 1))
+    );
     setPage(1);
     handleClose();
   };
 
   const sortBySuccess = () => {
-    launches.sort((a: any, b: any) => {
-      return a.success === b.success ? 0 : a.success ? -1 : 1;
-    });
+    setLaunches(
+      launches.sort((a: any, b: any) => {
+        return a.success === b.success ? 0 : a.success ? -1 : 1;
+      })
+    );
     setPage(1);
     handleClose();
   };
