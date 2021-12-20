@@ -94,15 +94,10 @@ function App() {
   };
   const sortByName = () => {
     launches.sort((a, b) => {
-      let fa = a.name.toLowerCase(),
-        fb = b.name.toLowerCase();
-      if (fa < fb) {
-        return -1;
-      }
-      if (fa > fb) {
-        return 1;
-      }
-      return 0;
+      let fa = a.name.toLowerCase();
+      let fb = b.name.toLowerCase();
+
+      return fa.localeCompare(fb);
     });
     setPage(1);
     handleClose();
