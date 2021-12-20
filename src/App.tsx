@@ -20,11 +20,23 @@ import ErrorIcon from "@mui/icons-material/Error";
 import Pagination from "@material-ui/lab/Pagination";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MenuIcon from "@mui/icons-material/Menu";
 import Collapse from "@mui/material/Collapse";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#005288",
+    },
+    secondary: {
+      main: "#A7A9AC",
+    },
+  },
+});
+
 interface Launch {
   id: string;
   name: string;
@@ -109,62 +121,64 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <IconButton
-            edge="start"
-            color="primary"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit" component="div">
-            SpaceX Launch Tracker
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box
-        m={3}
-        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-      >
-        <Grid container justifyContent="center" spacing={4}>
-          {paginate(launches, itemLimit, page).map((launch) => {
-            return (
-              <Grid key={launch.id} item xs={3}>
-                <LaunchCard
-                  id={launch.id}
-                  patch={launch.links.patch.large}
-                  title={launch.name}
-                  date={launch.date_unix}
-                  img={launch.links.flickr.original[1]}
-                  desc={launch.details}
-                  link={launch.links.article}
-                  success={launch.success}
-                  upcoming={launch.upcoming}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <AppBar position="static" style={{ backgroundColor: "#005288" }}>
+          <Toolbar>
+            <Typography variant="h6" color="inherit" component="div">
+              SpaceX Launch Tracker
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Box
+          m={3}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Grid container justifyContent="center" spacing={4}>
+            {paginate(launches, itemLimit, page).map((launch) => {
+              return (
+                <Grid key={launch.id} item xs={3}>
+                  <LaunchCard
+                    id={launch.id}
+                    patch={launch.links.patch.large}
+                    title={launch.name}
+                    date={launch.date_unix}
+                    img={launch.links.flickr.original[1]}
+                    desc={launch.details}
+                    link={launch.links.article}
+                    success={launch.success}
+                    upcoming={launch.upcoming}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Box>
 
-      <Box
-        m={1}
-        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-      >
-        <Pagination
-          count={Math.round(launches.length / itemLimit)}
-          variant="outlined"
-          color="primary"
-          page={page}
-          onChange={handleChange}
-          showFirstButton
-          showLastButton
-        />
-      </Box>
-    </div>
+        <Box
+          m={1}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination
+            count={Math.round(launches.length / itemLimit)}
+            variant="outlined"
+            color="primary"
+            page={page}
+            onChange={handleChange}
+            showFirstButton
+            showLastButton
+          />
+        </Box>
+      </div>
+    </ThemeProvider>
   );
 }
 
