@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 //import data from './launch.json';
 import "./App.css";
-import { Box } from "@mui/system";
+import { Box, grid } from "@mui/system";
 import Done from "@mui/icons-material/Done";
 import ErrorIcon from "@mui/icons-material/Error";
 import Pagination from "@material-ui/lab/Pagination";
@@ -25,6 +25,8 @@ import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { Menu, MenuItem } from "@material-ui/core";
+import { Grid4x4Outlined } from "@mui/icons-material";
 
 const theme = createTheme({
   palette: {
@@ -86,6 +88,45 @@ function App() {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const sortByName = () => {
+    launches.sort((a, b) => {
+      let fa = a.name.toLowerCase(),
+        fb = b.name.toLowerCase();
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
+    setPage(1);
+    handleClose();
+  };
+
+  const sortByDate = () => {
+    launches.sort((a: any, b: any) => (a.date_unix > b.name ? -1 : 1));
+    setPage(1);
+    handleClose();
+  };
+
+  const sortBySuccess = () => {
+    launches.sort((a: any, b: any) => {
+      return a.success === b.success ? 0 : a.success ? -1 : 1;
+    });
+    setPage(1);
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   useEffect(() => {
     const url = "https://api.spacexdata.com/v4/launches";
     const fetchData = async () => {
@@ -130,6 +171,38 @@ function App() {
             </Typography>
           </Toolbar>
         </AppBar>
+        <Grid container justifyContent="right">
+          <Box m={1}>
+            <Button
+              id="demo-positioned-button"
+              aria-controls="demo-positioned-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              Sort By
+            </Button>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <MenuItem onClick={sortByName}>Name</MenuItem>
+              <MenuItem onClick={sortByDate}>Date</MenuItem>
+              <MenuItem onClick={sortBySuccess}>Success</MenuItem>
+            </Menu>
+          </Box>
+        </Grid>
         <Box
           m={3}
           sx={{
