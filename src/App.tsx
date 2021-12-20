@@ -111,9 +111,35 @@ function App() {
     handleClose();
   };
 
+  const sortByName2 = () => {
+    setLaunches(
+      launches.sort((a, b) => {
+        let fa = a.name.toLowerCase(),
+          fb = b.name.toLowerCase();
+        if (fa > fb) {
+          return -1;
+        }
+        if (fa < fb) {
+          return 1;
+        }
+        return 0;
+      })
+    );
+    setPage(1);
+    handleClose();
+  };
+
   const sortByDate = () => {
     setLaunches(
       launches.sort((a: any, b: any) => (a.date_unix > b.date_unix ? -1 : 1))
+    );
+    setPage(1);
+    handleClose();
+  };
+
+  const sortByDate2 = () => {
+    setLaunches(
+      launches.sort((a: any, b: any) => (a.date_unix < b.date_unix ? -1 : 1))
     );
     setPage(1);
     handleClose();
@@ -123,6 +149,16 @@ function App() {
     setLaunches(
       launches.sort((a: any, b: any) => {
         return a.success === b.success ? 0 : a.success ? -1 : 1;
+      })
+    );
+    setPage(1);
+    handleClose();
+  };
+
+  const sortBySuccess2 = () => {
+    setLaunches(
+      launches.sort((a: any, b: any) => {
+        return a.success === b.success ? 0 : b.success ? -1 : 1;
       })
     );
     setPage(1);
@@ -208,9 +244,12 @@ function App() {
                 horizontal: "left",
               }}
             >
-              <MenuItem onClick={sortByName}>Name</MenuItem>
-              <MenuItem onClick={sortByDate}>Date</MenuItem>
-              <MenuItem onClick={sortBySuccess}>Success</MenuItem>
+              <MenuItem onClick={sortByName}>Name (A-Z)</MenuItem>
+              <MenuItem onClick={sortByName2}>Name (Z-A)</MenuItem>
+              <MenuItem onClick={sortByDate}>Date (New-Old)</MenuItem>
+              <MenuItem onClick={sortByDate2}>Date (Old-New)</MenuItem>
+              <MenuItem onClick={sortBySuccess}>Success (Fail Last)</MenuItem>
+              <MenuItem onClick={sortBySuccess2}>Success (Fail First)</MenuItem>
             </Menu>
           </Box>
         </Grid>
@@ -252,7 +291,7 @@ function App() {
           }}
         >
           <Pagination
-            count={Math.round(launches.length / itemLimit)}
+            count={Math.ceil(launches.length / itemLimit)}
             variant="outlined"
             color="primary"
             page={page}
