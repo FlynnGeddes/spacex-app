@@ -26,6 +26,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Menu, MenuItem } from "@material-ui/core";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 const theme = createTheme({
   palette: {
@@ -190,6 +191,7 @@ function App() {
               onClick={handleClick}
             >
               Sort By
+              <FilterListIcon />
             </Button>
             <Menu
               id="demo-positioned-menu"
