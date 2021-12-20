@@ -160,7 +160,11 @@ function App() {
       <div className="App">
         <AppBar position="static" style={{ backgroundColor: "#005288" }}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" component="div">
+            <Typography
+              variant="h6"
+              style={{ color: "#ffffff" }}
+              component="div"
+            >
               SpaceX Launch Tracker
             </Typography>
           </Toolbar>
