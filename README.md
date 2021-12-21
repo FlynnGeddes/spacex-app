@@ -13,4 +13,4 @@ This is my first time coding with typescript and react as this project was put t
 
 ## API Links
 
-I used the SpaceX API found here: `https://api.spacexdata.com/v4/launches`
+I used the SpaceX API found here: https://api.spacexdata.com/v4/launches
