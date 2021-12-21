@@ -7,7 +7,7 @@ This is my first time coding with typescript and react as this project was put t
 ## Running it on your machine
 
 - Install **Nodejs** if not already (https://nodejs.org/en/download/)
-- Download the app onto your local device
+- Download the project onto your local device
 - Run `npm install` in the terminal
 - Run `npm start` in the terminal
 
