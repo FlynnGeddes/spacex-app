@@ -27,6 +27,11 @@ import Toolbar from "@mui/material/Toolbar";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Menu, MenuItem } from "@material-ui/core";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const theme = createTheme({
   palette: {
@@ -72,6 +77,16 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 function App() {
+  const [openDialog, setDialogOpen] = React.useState(false);
+
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
   let itemLimit = 24;
   const [loading, setLoading] = useState(true);
   const [launches, setLaunches] = useState<Launch[]>([]);
@@ -210,49 +225,104 @@ function App() {
           <Toolbar>
             <Typography
               variant="h6"
-              style={{ color: "#ffffff" }}
+              style={{ color: "#ffffff", textAlign: "left" }}
               component="div"
+              sx={{ flexGrow: 1 }}
             >
               SpaceX Launch Tracker
             </Typography>
+
+            <Box
+              m={2}
+              pt={3}
+              sx={{ maxHeight: 15, display: "flex", p: 1, m: 1 }}
+            >
+              <Button
+                onClick={handleDialogOpen}
+                size="large"
+                color="inherit"
+                style={{ color: "white" }}
+              >
+                About
+              </Button>
+            </Box>
+
+            <Dialog
+              open={openDialog}
+              onClose={handleDialogClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"SpaceX Launch Tracker By Flynn Geddes"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  My first react app developed as part of upskilling for my
+                  apprenticeship. This app was made to help me to learn
+                  Typescript, React and API usage.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  target="_blank"
+                  href={"https://github.com/FlynnGeddes/spacex-app"}
+                >
+                  Github
+                </Button>
+                <Button
+                  target="_blank"
+                  href={"https://api.spacexdata.com/v4/launches"}
+                >
+                  API
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            <Box
+              m={2}
+              pt={3}
+              sx={{ maxHeight: 15, display: "flex", p: 1, m: 1 }}
+            >
+              <Button
+                size="large"
+                style={{ color: "white" }}
+                id="demo-positioned-button"
+                aria-controls="demo-positioned-menu"
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              >
+                Sort By
+                <FilterListIcon />
+              </Button>
+              <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <MenuItem onClick={sortByName}>Name (A-Z)</MenuItem>
+                <MenuItem onClick={sortByName2}>Name (Z-A)</MenuItem>
+                <MenuItem onClick={sortByDate}>Date (New-Old)</MenuItem>
+                <MenuItem onClick={sortByDate2}>Date (Old-New)</MenuItem>
+                <MenuItem onClick={sortBySuccess}>Success (Fail Last)</MenuItem>
+                <MenuItem onClick={sortBySuccess2}>
+                  Success (Fail First)
+                </MenuItem>
+              </Menu>
+            </Box>
           </Toolbar>
         </AppBar>
-        <Grid container justifyContent="right">
-          <Box m={1}>
-            <Button
-              id="demo-positioned-button"
-              aria-controls="demo-positioned-menu"
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              Sort By
-              <FilterListIcon />
-            </Button>
-            <Menu
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-            >
-              <MenuItem onClick={sortByName}>Name (A-Z)</MenuItem>
-              <MenuItem onClick={sortByName2}>Name (Z-A)</MenuItem>
-              <MenuItem onClick={sortByDate}>Date (New-Old)</MenuItem>
-              <MenuItem onClick={sortByDate2}>Date (Old-New)</MenuItem>
-              <MenuItem onClick={sortBySuccess}>Success (Fail Last)</MenuItem>
-              <MenuItem onClick={sortBySuccess2}>Success (Fail First)</MenuItem>
-            </Menu>
-          </Box>
-        </Grid>
         <Box
           m={3}
           sx={{
