@@ -11,6 +11,8 @@ This is my first time coding with typescript and react as this project was put t
 - Run `npm install` in the terminal
 - Run `npm start` in the terminal
 
-## API Links
+## Links
 
 I used the SpaceX API found here: https://api.spacexdata.com/v4/launches
+
+Here is a link to the app: https://flynngeddes.github.io/spacex-app/
