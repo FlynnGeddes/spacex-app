@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  background-color: rgb(230, 230, 230);
+  background-image: url("https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8&w=1000&q=80");
+  /* background-color: rgb(230, 230, 230); */
 }
 
 .App-logo {

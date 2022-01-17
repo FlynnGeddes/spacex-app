@@ -48,6 +48,7 @@ const theme = createTheme({
 const useStyles = makeStyles({
   root: {
     borderRadius: 40,
+    background: "linear-gradient(45deg,#b5b5b3, #ffffff);",
   },
 });
 
