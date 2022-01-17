@@ -32,6 +32,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { makeStyles } from "@material-ui/core/styles";
 
 const theme = createTheme({
   palette: {
@@ -41,6 +42,12 @@ const theme = createTheme({
     secondary: {
       main: "#A7A9AC",
     },
+  },
+});
+
+const useStyles = makeStyles({
+  root: {
+    borderRadius: 40,
   },
 });
 
@@ -223,15 +230,17 @@ function App() {
       <div className="App">
         <AppBar position="static" style={{ backgroundColor: "#005288" }}>
           <Toolbar>
-            <Typography
-              variant="h6"
-              style={{ color: "#ffffff", textAlign: "left" }}
-              component="div"
-              sx={{ flexGrow: 1 }}
-            >
-              SpaceX Launch Tracker
-            </Typography>
-
+            <Box sx={{ flexGrow: 1 }} textAlign="left">
+              <Button href="/spacex-app" style={{ textTransform: "none" }}>
+                <Typography
+                  variant="h6"
+                  style={{ color: "#ffffff", textAlign: "left" }}
+                  component="div"
+                >
+                  SpaceX Launch Tracker
+                </Typography>
+              </Button>
+            </Box>
             <Box
               m={2}
               pt={3}
@@ -267,12 +276,14 @@ function App() {
                 <Button
                   target="_blank"
                   href={"https://github.com/FlynnGeddes/spacex-app"}
+                  style={{ color: "dodgerblue" }}
                 >
                   Github
                 </Button>
                 <Button
                   target="_blank"
                   href={"https://api.spacexdata.com/v4/launches"}
+                  style={{ color: "dodgerblue" }}
                 >
                   API
                 </Button>
@@ -294,22 +305,16 @@ function App() {
                 onClick={handleClick}
               >
                 Sort By
-                <FilterListIcon />
+                <FilterListIcon style={{ paddingLeft: 5 }} />
               </Button>
               <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
+                id="menu-appbar"
                 anchorEl={anchorEl}
+                getContentAnchorEl={null}
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
                 open={open}
                 onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
               >
                 <MenuItem onClick={sortByName}>Name (A-Z)</MenuItem>
                 <MenuItem onClick={sortByName2}>Name (Z-A)</MenuItem>
@@ -419,8 +424,10 @@ function LaunchCard(props: LaunchCardProps) {
     }
   };
 
+  const classes = useStyles();
+
   return (
-    <Card sx={{ maxWidth: cardWidth }}>
+    <Card className={classes.root} sx={{ maxWidth: cardWidth }}>
       <CardHeader
         avatar={
           props.patch && (
@@ -466,21 +473,25 @@ function LaunchCard(props: LaunchCardProps) {
       <Grid>
         <CardActions>
           {props.desc && (
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
+            <Box sx={{ m: 1 }}>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </Box>
           )}
 
           {props.link && (
             <Grid container justifyContent="flex-end">
-              <Button size="small" target="_blank" href={props.link}>
-                Learn More
-              </Button>
+              <Box sx={{ m: 1 }}>
+                <Button size="small" target="_blank" href={props.link}>
+                  Learn More
+                </Button>
+              </Box>
             </Grid>
           )}
         </CardActions>
