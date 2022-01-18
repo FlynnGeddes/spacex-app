@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     minWidth: 275,
     border: "1px",
     padding: "10px",
-    boxShadow: "5px 10px #8a877f",
+    boxShadow: "-5px 10px #8a877f",
   },
 });
 
