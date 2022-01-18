@@ -48,7 +48,11 @@ const theme = createTheme({
 const useStyles = makeStyles({
   root: {
     borderRadius: 40,
-    background: "linear-gradient(45deg,#b5b5b3, #ffffff);",
+    background: "linear-gradient(45deg,#a3a096, #ffffff);",
+    minWidth: 275,
+    border: "1px",
+    padding: "10px",
+    boxShadow: "5px 10px #8a877f",
   },
 });
 
@@ -229,7 +233,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <AppBar position="static" style={{ backgroundColor: "#005288" }}>
+        <AppBar
+          position="static"
+          style={{ background: "linear-gradient(45deg, #4f4f4f, #949494)" }}
+        >
           <Toolbar>
             <Box sx={{ flexGrow: 1 }} textAlign="left">
               <Button href="/spacex-app" style={{ textTransform: "none" }}>
