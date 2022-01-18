@@ -455,12 +455,34 @@ function LaunchCard(props: LaunchCardProps) {
       <Box m={1}>
         <Grid container justifyContent="center">
           {props.success && (
-            <Chip label="Successful" color="success" icon={<Done />} />
+            <Chip
+              label="Successful"
+              style={{
+                background: "linear-gradient(45deg,#008a09, #00cf0d)",
+                color: "white",
+              }}
+              icon={<Done style={{ color: "white" }} />}
+            />
           )}
           {!props.success && !props.upcoming && (
-            <Chip label="Failed" color="error" icon={<ErrorIcon />} />
+            <Chip
+              label="Failed"
+              style={{
+                background: "linear-gradient(45deg,#c90000, #ff4d4d)",
+                color: "white",
+              }}
+              icon={<ErrorIcon style={{ color: "white" }} />}
+            />
           )}
-          {props.upcoming && <Chip label="Upcoming" color="warning" />}
+          {props.upcoming && (
+            <Chip
+              label="Upcoming"
+              style={{
+                background: "linear-gradient(45deg,#bf7c00, #ffac12)",
+                color: "white",
+              }}
+            />
+          )}
         </Grid>
       </Box>
       <CardContent>
